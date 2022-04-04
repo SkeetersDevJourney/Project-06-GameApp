@@ -168,6 +168,13 @@ textarea {
   margin: 0; /* 2 */
 }
 
+input:disabled {
+  background-color: none;
+  border-style: none;
+  border: none;
+  color: none;
+}
+
 /**
  * Show the overflow in IE.
  * 1. Show the overflow in Edge.

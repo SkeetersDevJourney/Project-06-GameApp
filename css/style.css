@@ -163,6 +163,13 @@ textarea {
   /* 2 */
 }
 
+input:disabled {
+  background-color: none;
+  border-style: none;
+  border: none;
+  color: none;
+}
+
 /**
  * Show the overflow in IE.
  * 1. Show the overflow in Edge.
@@ -337,6 +344,23 @@ template {
   display: none;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Anybody", cursive;
+  font-weight: 400;
+}
+
+p {
+  font-size: 32px;
+}
+
+#gametext {
+  margin: 0;
+}
+
 .overlay {
   width: 100%;
   height: 100vh;
@@ -358,10 +382,53 @@ template {
   background-color: lightgrey;
 }
 
-main {
+.game-container {
   width: 100%;
   height: 100vh;
   background-color: grey;
+  display: none;
+}
+
+.game-screen {
+  width: 100%;
+  height: 200px;
+  background-color: salmon;
+}
+
+.keyboard {
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #202020;
+  display: grid;
+  grid-template-columns: repeat(20, minmax(15px, 35px));
+  grid-template-rows: repeat(3, minmax(15px, 50px));
+  grid-gap: 2px 5px;
+}
+.keyboard .key {
+  font-weight: 600;
+  color: black;
+  background-color: ghostwhite;
+  grid-column: span 2;
+  border-radius: 5px;
+  border-style: none;
+  border-right: 5px solid lightgrey;
+  border-left: 5px solid lightgrey;
+  border-bottom: 10px solid grey;
+}
+.keyboard .key:active {
+  border-bottom: 5px solid grey;
+  margin-top: 5px;
+}
+.keyboard #a {
+  grid-column-start: 2;
+  grid-column-end: 4;
+}
+.keyboard #z {
+  grid-column-start: 3;
+  grid-column-end: 5;
+}
+.keyboard #sf:disabled {
+  background-color: ghostwhite;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,18 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="css/style.css">
-   <title>Word Guessing Game</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@400;600&family=Orbitron&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+   
+  <title>Word Guessing Game</title>
 </head>
   <body>
       <div class="overlay">
         <p>Welcome to the GAME! Press 'Start' when you are ready to begin!</p>
         <input type="button" id="btn-start" value="Start">
       </div>
-      <main></main>
+      <main class="game-container">
+        <div class="game-screen">
+          <p id="gametext"></p>
+        </div>
+        <div class="keyboard">
+          <input type="button" class="key" id="q" value="Q">
+          <input type="button" class="key" id="w" value="W">
+          <input type="button" class="key" id="e" value="E">
+          <input type="button" class="key" id="r" value="R">
+          <input type="button" class="key" id="t" value="T">
+          <input type="button" class="key" id="y" value="Y">
+          <input type="button" class="key" id="u" value="U">
+          <input type="button" class="key" id="i" value="I">
+          <input type="button" class="key" id="o" value="O">
+          <input type="button" class="key" id="p" value="P">
+          <input type="button" class="key" id="a" value="A">
+          <input type="button" class="key" id="s" value="S">
+          <input type="button" class="key" id="d" value="D">
+          <input type="button" class="key" id="f" value="F">
+          <input type="button" class="key" id="g" value="G">
+          <input type="button" class="key" id="h" value="H">
+          <input type="button" class="key" id="j" value="J">
+          <input type="button" class="key" id="k" value="K">
+          <input type="button" class="key" id="l" value="L">
+          <input type="button" class="key" id="z" value="Z">
+          <input type="button" class="key" id="x" value="X">
+          <input type="button" class="key" id="c" value="C">
+          <input type="button" class="key" id="v" value="V">
+          <input type="button" class="key" id="b" value="B">
+          <input type="button" class="key" id="n" value="N">
+          <input type="button" class="key" id="m" value="M">
+          <input type="button" class="key" id="sf" value=">:)" disabled>
+        </div>
+      </main>
   <script src="js/app.js"></script>
   </body>
 </html>
