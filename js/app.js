@@ -21,13 +21,13 @@ keyboard.addEventListener('mousedown', (e) => {
     keyRelease.play()
     console.log(userInput);
     p.innerHTML += userInput;
+    keyboard.addEventListener('mouseup', (e) => {
+      const key = e.target;
+      if (key.tagName === 'INPUT') {
+        keyClick.play()
+      }
+    });
   }
-  
-  keyboard.addEventListener('mouseup', () => {
-    if (key.tagName === 'INPUT') {
-      keyClick.play()
-    }
-  });
 });
 
 

@@ -396,10 +396,10 @@ p {
 }
 
 .keyboard {
-  margin: 0 auto;
   padding: 10px;
   background-color: #202020;
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(20, minmax(15px, 35px));
   grid-template-rows: repeat(3, minmax(15px, 50px));
   grid-gap: 2px 5px;
