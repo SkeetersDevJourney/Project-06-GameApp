@@ -391,21 +391,57 @@ p {
 
 .game-screen {
   width: 100%;
-  height: 200px;
+  height: 50vh;
   background-color: salmon;
 }
 
+.phrase-container {
+  margin: 0;
+  padding: 20px;
+  background-color: black;
+}
+
+.letter {
+  text-align: center;
+  background-color: grey;
+}
+
+.phrase-container {
+  display: flex;
+  justify-content: center;
+}
+
+.letter {
+  display: inline-block;
+  font-family: "Orbitron", sans-serif;
+  color: greenyellow;
+  border-bottom: 3px solid greenyellow;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  margin-right: 6px;
+  background-color: black;
+}
+
+.board-container {
+  display: flex;
+  justify-content: center;
+}
+
 .keyboard {
+  max-width: 700px;
   padding: 10px;
   background-color: #202020;
   display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(20, minmax(15px, 35px));
-  grid-template-rows: repeat(3, minmax(15px, 50px));
+  grid-template-columns: repeat(20, minmax(10px, 50px));
+  grid-template-rows: repeat(3, minmax(10px, 50px));
   grid-gap: 2px 5px;
 }
 .keyboard .key {
   font-weight: 600;
+  font-size: 1.25em;
+  padding: 0;
   color: black;
   background-color: ghostwhite;
   grid-column: span 2;
@@ -429,6 +465,23 @@ p {
 }
 .keyboard #sf:disabled {
   background-color: ghostwhite;
+}
+
+@media (max-width: 360px) {
+  .keyboard {
+    grid-template-columns: repeat(20, minmax(10px, 35px));
+    grid-template-rows: repeat(3, minmax(10px, 50px));
+  }
+  .keyboard .key {
+    font-size: 0.85em;
+    border-right: 3px solid lightgrey;
+    border-left: 3px solid lightgrey;
+    border-bottom: 6px solid grey;
+  }
+  .keyboard .key:active {
+    border-bottom: 3px solid grey;
+    margin-top: 3px;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
