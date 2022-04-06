@@ -30,8 +30,7 @@ const phrases = [
   'First, solve the problem. Then, write the code.',
   'Fix the cause, not the symptom.',
   'Make it work, make it right, make it fast.',
-  'Optimism is an occupational hazard of programming.',
-  'Java is to JavaScript what car is to Carpet.',
+  'Optimism is an occupational hazard of programming.'
 ];
 
 /* retrieves random phrase and stops phrases from being selected twice in a row */
@@ -40,7 +39,7 @@ let selectedPhrase;
 let previousNum;
 function getRandomPhrase () {
 
-  let randomNum = Math.floor(Math.random() * 5);
+  let randomNum = Math.floor(Math.random() * 8);
 
   if (randomNum !== previousNum) {
     selectedPhrase = `${phrases[randomNum]}`;
@@ -121,50 +120,19 @@ keyboard.addEventListener('mousedown', (e) => {
 ///////////////////////////////////////////////////////////
 //                          Timer                        //    
 ///////////////////////////////////////////////////////////
-/*
-const startingMinutes = 1;       // Starting time in minutes
-let seconds = startingMinutes * 60;  // Calculates starting time in secs
-
-const countdownEl = document.getElementById('countdown');
-const tickSound1 = new Audio('../audio/tick1.mp3');
-const tickSound2 = new Audio('../audio/tick2.mp3');
-
-function startTimer() { // Allows user to start timer when ready
-  setInterval(updateCountdown, 1000); // setInterval(functionName, interval in ms)
-}
-
-function updateCountdown() {
-  const displayMinutes =  Math.floor(seconds / 60); 
-  let displaySeconds = seconds % 60;
-
-  if (displaySeconds < 10) {
-    displaySeconds = `0${displaySeconds}`;
-  }
-
-  if (displaySeconds % 2 == 0) { 
-    tickSound1.play();
-    console.log('tick 1')
-  } else {
-    tickSound2.play();
-    console.log('tick 2')
-  }
-
-
-  countdownEl.innerHTML = `${displayMinutes}:${displaySeconds}`;
-  seconds--;
-}
-*/
-////////////////////////////////////////////////////////////////////////
 
 const tickSound2 = new Audio('../audio/tick1.1.mp3');
 const tickSound1 = new Audio('../audio/tick2.1.mp3');
 const explosionSound = new Audio('../audio/explosion.mp3');
 
-const minutes = 0.5;
+const minutes = 1;
+
 let seconds = Math.floor(minutes * 60);
 originalSeconds = seconds;
+
 let quarterSecond = seconds * 4;
 let originalTime = quarterSecond;
+
 let timerID;
 let tick; 
 
@@ -212,9 +180,9 @@ function timer() {
   }
   
   quarterSecond--;
-  console.log(quarterSecond);
+  // console.log(quarterSecond);
   
-  if (quarterSecond == -5) {
+  if (quarterSecond <= -5) {
     endGame();
   }
 
@@ -226,21 +194,24 @@ function timer() {
     countdownEl.style.color = 'red';
   }
 
-  let displayMinutes =  Math.floor(seconds / 60); 
+  let displayMinutes = Math.floor(seconds / 60); 
   let displaySeconds = seconds % 60;
 
-    if (displaySeconds < 10 && displaySeconds > 0) {
-      displaySeconds = `0${displaySeconds}`;
-    } else if (displaySeconds <= 0) {
-      displaySeconds = '00';
-      displayMinutes = '0';
-    }
+  if (displaySeconds < 10 && displaySeconds > 0) {
+    displaySeconds = `0${displaySeconds}`;
+  } else if (displaySeconds <= 0) {
+    displaySeconds = '00';
+  }
+
+  if (quarterSecond <= 0) {
+    displayMinutes = '0';
+  }
   
   countdownEl.innerHTML = `${displayMinutes}:${displaySeconds}`;
 }
 
 
-/////////-- Toggle Light --//////////
+/////////-- Toggle Colors --//////////
 
 function lightToggle() {
   light.className += ' light-on'; 
@@ -249,37 +220,19 @@ function lightToggle() {
   }, 150 );
 }
 
+function clockRedToggle() {
+  countdownEl.style.color = 'red'; 
+  setTimeout( () => {
+    countdownEl.style.color = 'white'; 
+  }, 500 );
+}
+
 ////////////////////////////////////////////////////////////////////////
 
 //////////-- Input Checks --//////////
 
-// keyboard.addEventListener('click', (e) => {
-
-//   const key = e.target;
-//   const matchDiv = document.getElementsByClassName('letter');
-//   if (key.tagName === 'INPUT') {
-//     words.forEach(word => {
-//       for (let i=0; i<word.length; i++) {
-//         if (word[i].toUpperCase() == userInput) {
-//           const matchIndex = word.indexOf(word[i]);
-//           console.log(matchIndex);
-
-
-//         } else {
-//         }
-//       }
-//     });
-// }
-// })
-
-// function throughWords() {
-//   words.forEach(word => {
-//     for (let i=0; i<word.length; i++)
-//     console.log(word.indexOf(word[i]));
-//   });
-// }
-
 let health = 5;
+const wrongBuzz = new Audio('../audio/incorrect.mp3');
 
 keyboard.addEventListener('click', (e) => {
   let allLetters = selectedPhrase.replace(/ /g, '').toUpperCase();
@@ -300,7 +253,14 @@ keyboard.addEventListener('click', (e) => {
 
   if (check == true) {
     health--;
+    seconds -= 10;
+    quarterSecond -= 40;
+    wrongBuzz.currentTime = 0;
+    wrongBuzz.play();
     console.log(`Health: ${health}`);
+    if (quarterSecond > 20) {
+      clockRedToggle();
+    }
   }
 
   if (health <= 0) {
@@ -311,9 +271,7 @@ keyboard.addEventListener('click', (e) => {
 });
 
 
-//////////-- EndGame Overlay (Lost) --//////////
-
-
+//////////-- EndGame Overlay (Lost) and Resets --//////////
 
 function endGame() {
   const overlayText = document.querySelector('p');
@@ -325,6 +283,8 @@ function endGame() {
   overlayText.textContent = 'BOOM! Next time try to cut the red wire... Oh wait... my bad. Wrong game.';
   resetBtn.value = 'Reset';
   overlay.className += ' end-game';
+
+  countdownEl.style.color = 'white';
 
   phraseContainer.innerHTML = '';
   health = 5;
