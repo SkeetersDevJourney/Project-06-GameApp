@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@400;600&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@400;600&family=Rubik+Glitch&family=Rubik:wght@800&family=VT323&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css">
    
@@ -22,7 +22,14 @@
         <div class="game-screen">
           <div class="phrase-container"></div>
         </div>
-        <div class="timer-container"></div>
+        <div class="timer-container">
+          <div class="clock">
+            <div id="countdown"></div>
+            <div class="light-container">
+              <div class="light"></div>
+            </div>
+          </div>
+        </div>
         <div class="board-container">
           <div class="keyboard">
             <input type="button" class="key" id="q" value="Q">
@@ -56,6 +63,5 @@
         </div>
       </main>
   <script src="js/app.js"></script>
-  <script src="js/timer.js"></script>
   </body>
 </html>
