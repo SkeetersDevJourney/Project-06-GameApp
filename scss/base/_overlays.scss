@@ -23,7 +23,7 @@
     &:hover {
       background-color: $game-text;
       color: black;
-    } 
+    }
   }
 }
 
@@ -35,7 +35,10 @@
   justify-content: center;
   align-items: center;
   grid-template-columns: repeat(2, minmax(100px, 1fr));
-  grid-template-rows: repeat(4, minmax(100px, 150px));
+  grid-template-rows: repeat(4, minmax(100px, 125px));
+  p {
+    font-size: 1em;
+  } 
 }
 
 .visual {
@@ -44,7 +47,7 @@
 
 .welcome {
   grid-column: span 2;
-  font-size: 1.5em;
+  font-size: 2em;
 }
 
 .instruction, .welcome {
@@ -87,11 +90,6 @@
   padding: 0 15px;
 }
 
-.win-game, .end-game {
-  .welcome p {
-    font-size: .75em;
-  }
-}
 
 
 
