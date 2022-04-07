@@ -11,6 +11,7 @@ const explosionSound = new Audio('../audio/explosion.mp3');
 const wrongBuzz = new Audio('../audio/incorrect.mp3');
 const crowd = new Audio('../audio/crowd.mp3');
 const fanfare = new Audio('../audio/fanfare.mp3');
+const ding = new Audio('../audio/ding.mp3');
 
 //////////////////////////////////////////////////////
 //                   Start Game                     //
@@ -35,8 +36,6 @@ function startGame() {
   startTimer();
   resetHearts();
 }
-
-
 
 //////////////////////////////////////////////////////
 //                 Phrase Selector                  //
@@ -268,19 +267,27 @@ keyboard.addEventListener('mousedown', (e) => {
   if (key.tagName === 'INPUT') {
     keyClick.currentTime = 0;
     keyClick.play();
-  }
+  } 
 });
 
+let key;
+
 keyboard.addEventListener('mouseup', (e) => { //click
-  
-  let key = e.target;
+  key = e.target;
   if (key.tagName === 'INPUT') {
     userInput = key.value;
     console.log(userInput);
     keyRelease.currentTime = 0; //
     keyRelease.play(); //
+    checkInput();
+  } else {
+    console.log('not an input');
   }
-  
+  return key;
+});
+
+function checkInput() {
+
   let allLetters = selectedPhrase.replace(/ /g, '').toUpperCase();
   let check = true;
 
@@ -297,7 +304,6 @@ keyboard.addEventListener('mouseup', (e) => { //click
   let winCondition = 0;
   for (let i=0; i<allHTMLLetters.length; i++) {
     if (allHTMLLetters[i].textContent == ' ') {
-      console.log('space left');
       winCondition++;
     } 
   }
@@ -348,8 +354,7 @@ keyboard.addEventListener('mouseup', (e) => { //click
     endGame();
   }
 
-});
-
+}
 
 //////////-- EndGame Overlay (Lost) and Resets --//////////
 
@@ -368,8 +373,6 @@ function resetHearts() {
 
 function reset() {
 
-  spareKey.disabled = true;
-  
   countdownEl.style.color = 'white';
   phraseContainer.innerHTML = '';
   health = 5;
@@ -377,17 +380,20 @@ function reset() {
   seconds = originalSeconds;
   quarterSecond = originalTime;
 
+  light.className = 'light';
+
   crowd.currentTime = 0;
   fanfare.currentTime = 0;
   explosionSound.currentTime = 0;
 
   const allKeys = document.getElementsByClassName('key');
-  console.log(allKeys);
   for (let i=0; i<allKeys.length; i++) {
     allKeys[i].removeAttribute('disabled');
     allKeys[i].removeAttribute('style');
   }
+  spareKey.disabled = 'true';
   resetHearts();
+
   clearInterval(timerID);
 }
 
@@ -407,19 +413,37 @@ function endGame() {
   reset();
 }
 
+// function lightToggle() {
+//   light.className += ' light-on'; 
+//   setTimeout( () => {
+//     light.className = 'light'
+//   }, 150 );
+// }
+
 function winGame() {
 
-  overlay.style.display = 'flex';
-  main.style.display = 'none';
+  clearInterval(timerID);
 
-  overlayText.textContent = 'Nicely done! You beat the game and without even breaking a sweat! Want to play again?';
-  resetBtn.value = 'PLAY AGAIN';
-  overlay.className += ' win-game';
+  ding.currentTime = 0;
+  ding.play();
+  light.className = '';
+  light.className += 'light light-win';
 
-  music.pause();
-  crowd.play();
-  crowd.volume = .5;
-  fanfare.play();
-  fanfare.volume = .4;
-  reset();
+  setTimeout( () => {
+    overlay.style.display = 'flex';
+    main.style.display = 'none';
+
+    overlayText.textContent = 'Nicely done! You beat the game without even breaking a sweat! Want to play again?';
+    resetBtn.value = 'PLAY AGAIN';
+    overlay.className += ' win-game';
+
+    music.pause();
+    crowd.play();
+    crowd.volume = .5;
+    fanfare.play();
+    fanfare.volume = .4;
+    reset();
+  }, 2000 );
+
+  
 }

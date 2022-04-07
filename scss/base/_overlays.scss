@@ -8,7 +8,7 @@
   background-color: black;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   text-align: center;
   margin-bottom: 100px;
   input {
@@ -35,7 +35,7 @@
   justify-content: center;
   align-items: center;
   grid-template-columns: repeat(2, minmax(100px, 1fr));
-  grid-template-rows: repeat(4, minmax(100px, 125px));
+  grid-template-rows: repeat(4, fit-content(100%)); // minmax(100px, 125px)
   p {
     font-size: 1em;
   } 
@@ -57,7 +57,7 @@
   gap: 5px;
   border-bottom: 2px solid $game-text;
   height: 100%;
-  padding: 20px 0;
+  padding: 20px 10px;
 }
 
 .ex-letter {
