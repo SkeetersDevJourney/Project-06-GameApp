@@ -1,26 +1,46 @@
-//////////-- Initializing Audio Files --//////////
+//////////////////////////////////////////////////////
+//                   Audio Files                    //
+//////////////////////////////////////////////////////
 
 const keyClick = new Audio("../audio/key-click.mp3");
 const keyRelease = new Audio("../audio/key-release.mp3");
+const music = new Audio("../audio/music.mp3");
+const tickSound2 = new Audio('../audio/tick1.1.mp3');
+const tickSound1 = new Audio('../audio/tick2.1.mp3');
+const explosionSound = new Audio('../audio/explosion.mp3');
+const wrongBuzz = new Audio('../audio/incorrect.mp3');
+const crowd = new Audio('../audio/crowd.mp3');
+const fanfare = new Audio('../audio/fanfare.mp3');
 
-//////////-- Retrieving Elements --//////////
+//////////////////////////////////////////////////////
+//                   Start Game                     //
+//////////////////////////////////////////////////////
 
 const btnStart = document.getElementById('btn-start');
 const overlay = document.querySelector('.overlay');
 const main = document.querySelector('main');
-const light = document.querySelector('.light');
-
-
-//////////-- Start Game Overlay --//////////
 
 btnStart.addEventListener('click', () => {
-  overlay.style.display = 'none';
-  main.style.display = 'block';
-  wordsToFlex();
-  startTimer();
+  overlay.className = "overlay";
+  startGame();
 });
 
-//////////-- Random Phrase Selector --//////////
+function startGame() {
+  overlay.style.display = 'none';
+  main.style.display = 'block';
+  music.currentTime = 0;
+  music.play()
+  music.volume = 0.15;
+  wordsToFlex();
+  startTimer();
+  resetHearts();
+}
+
+
+
+//////////////////////////////////////////////////////
+//                 Phrase Selector                  //
+//////////////////////////////////////////////////////
 
 const phrases = [
   'Javascript is the duct tape of the Internet.',
@@ -33,36 +53,33 @@ const phrases = [
   'Optimism is an occupational hazard of programming.'
 ];
 
-/* retrieves random phrase and stops phrases from being selected twice in a row */
+/*  Retrieves random phrase from the phrases array & prevents 
+    phrases from being selected twice in a row */
 
 let selectedPhrase;
 let previousNum;
-function getRandomPhrase () {
+
+function getRandomPhrase() {
 
   let randomNum = Math.floor(Math.random() * 8);
 
   if (randomNum !== previousNum) {
     selectedPhrase = `${phrases[randomNum]}`;
-    // console.log(selectedPhrase);
     previousNum = randomNum;
   } else {
     getRandomPhrase();
   }
+
   return selectedPhrase;
 };
 
 
-//////////-- Create Phrase Markup --//////////
+//////////////////////////////////////////////////////
+//              Creating Phrase Markup              //
+//////////////////////////////////////////////////////
 
-let words = [];
 
-function splitPhrase() {
-  let phrase = getRandomPhrase();
-  words = phrase.split(' ');
-  // console.log(words);
-}
-
-const phraseContainer = document.querySelector('.phrase-container');
+/* */
 
 function createWordFlex() {
   let flex = document.createElement('div');
@@ -70,15 +87,36 @@ function createWordFlex() {
   return flex;
 }
 
+/*  Splits phrase array at every 'space' and stores 
+    as an array of individual words  */
+
+let words = [];
+
+function splitPhrase() {
+  let phrase = getRandomPhrase();
+  words = phrase.split(' ');
+}
+
+/*  Creates a flexbox for each word in the phrase, 
+    creates letter elements for each individual letter,
+    and excludes punctionuation from game. */
+
+const phraseContainer = document.querySelector('.phrase-container');
+
 function wordsToFlex() {
+
   splitPhrase();
-  words.forEach(word => {
+
+  words.forEach(word => { // cycles through each word in word array
     let flex = createWordFlex();
-    for (let i=0; i<word.length; i++) {
+
+    for (let i=0; i<word.length; i++) { // loops through each letter
+
       text = word[i].toUpperCase();
       div = document.createElement('div');
       div.className = 'letter';
-      if (text == ';' 
+
+      if (   text == ';' 
           || text == '.'
           || text == "'"
           || text == ",") {
@@ -87,118 +125,119 @@ function wordsToFlex() {
       } else {
         div.textContent = ' ';
       }
-      // div.textContent = text; //change out
-      flex.appendChild(div);
+      // Each letter appended to word flexbox
+      flex.appendChild(div); 
     }
-    // console.log(flex);
-    phraseContainer.appendChild(flex);
+    // Each word appended to phrase flexbox
+    phraseContainer.appendChild(flex); 
   });
 }
 
-//////////-- Keyboard Clicking Events --//////////
+//////////////////////////////////////////////////////
+//                       Timer                      //
+//////////////////////////////////////////////////////
 
-const keyboard = document.querySelector('.keyboard');
-let userInput = '';
+const minutes = 1;   // Start time in minutes 
 
-keyboard.addEventListener('mousedown', (e) => {
-  const key = e.target;
-  if (key.tagName === 'INPUT') {
-    userInput = key.value;
-    keyRelease.play()
-    console.log(userInput);
-    keyboard.addEventListener('mouseup', (e) => {
-      const key = e.target;
-      if (key.tagName === 'INPUT') {
-        keyClick.play()
-      }
-    });
-  }
-});
+let seconds = Math.floor(minutes * 60); // Start time in seconds
+originalSeconds = seconds; // Saves original second time for reset();
 
+let quarterSecond = seconds * 4;  // Start time in quarter seconds
+let originalTime = quarterSecond; // Saves original quarter seconds for reset();
 
+/*  Time is stored in multiple different speeds in order to speed up 
+    ticking sound when time is running out --- I'm sure this is a
+    convoluted method but it's just how I figured it out */
 
-///////////////////////////////////////////////////////////
-//                          Timer                        //    
-///////////////////////////////////////////////////////////
-
-const tickSound2 = new Audio('../audio/tick1.1.mp3');
-const tickSound1 = new Audio('../audio/tick2.1.mp3');
-const explosionSound = new Audio('../audio/explosion.mp3');
-
-const minutes = 1;
-
-let seconds = Math.floor(minutes * 60);
-originalSeconds = seconds;
-
-let quarterSecond = seconds * 4;
-let originalTime = quarterSecond;
-
-let timerID;
-let tick; 
+let timerID; // for setInterval
+let tick; // Boolean to alternate between 2 ticking sounds
 
 const countdownEl = document.getElementById('countdown');
+const light = document.querySelector('.light');
 
 function startTimer() {
   timerID = setInterval(timer, 250);
 }
 
+// Plays ticking sound and toggles light indicator
+
+function tick1() {
+  tickSound1.currentTime = 0;
+  tickSound1.play();
+  lightToggle();
+  tick = 0;
+}
+
+function tick2() {
+  tickSound2.currentTime = 0;
+  tickSound2.play();
+  lightToggle();
+  tick = 1;
+}
+
+// for animating the ticker light
+
+function lightToggle() {
+  light.className += ' light-on'; 
+  setTimeout( () => {
+    light.className = 'light'
+  }, 150 );
+}
 
 function timer() {
 
-  if (quarterSecond <= 20) {
+  // 4x Speed hen timer is at 5 seconds left
+  if (quarterSecond <= 20) { 
     if (tick) {
-      tickSound1.play();
-      lightToggle();
-      tick = 0;
+      tick1();
     } else {
-      tickSound2.play();
-      lightToggle();
-      tick = 1;
+      tick2();
     }
 
-  } else if (quarterSecond > 20 && quarterSecond <= 60 && quarterSecond % 2 == 0) {
-        if (tick) {
-          tickSound1.play();
-          lightToggle();
-          tick = 0;
-        } else {
-          tickSound2.play();
-          lightToggle();
-          tick = 1;
-        }
+    // 2x Speed for when timer is between 5 and 12 seconds
+  } else if (    quarterSecond > 20 
+              && quarterSecond <= 60 
+              && quarterSecond % 2 == 0) {
 
+        if (tick) {
+          tick1();
+        } else {
+          tick2();
+        }
+    
+    // 1x Speed for the rest of the time
   } else if (quarterSecond % 4 == 0) {
       if (tick) {
-        tickSound1.play();
-        lightToggle();
-        tick = 0;
+        tick1();
       } else {
-        tickSound2.play();
-        lightToggle();
-        tick = 1;
+        tick2();
       }
   }
   
   quarterSecond--;
-  // console.log(quarterSecond);
-  
-  if (quarterSecond <= -5) {
-    endGame();
-  }
 
   if (quarterSecond % 4 == 0 ) { 
     seconds--;
+  }
+
+  if (quarterSecond <= -5) { /* Timer will sit of zero for a small
+                                extended time to raise intensity */
+    endGame();
   }
 
   if (quarterSecond < 20) {
     countdownEl.style.color = 'red';
   }
 
+  /*  Converts tracked timer values into 
+      values ready for display - compensates for values 
+      lower than ten in the seconds display */
+
   let displayMinutes = Math.floor(seconds / 60); 
   let displaySeconds = seconds % 60;
 
-  if (displaySeconds < 10 && displaySeconds > 0) {
-    displaySeconds = `0${displaySeconds}`;
+  if (displaySeconds < 10 && displaySeconds > 0) { 
+    displaySeconds = `0${displaySeconds}`;    
   } else if (displaySeconds <= 0) {
     displaySeconds = '00';
   }
@@ -210,45 +249,73 @@ function timer() {
   countdownEl.innerHTML = `${displayMinutes}:${displaySeconds}`;
 }
 
-
-/////////-- Toggle Colors --//////////
-
-function lightToggle() {
-  light.className += ' light-on'; 
-  setTimeout( () => {
-    light.className = 'light'
-  }, 150 );
-}
-
-function clockRedToggle() {
-  countdownEl.style.color = 'red'; 
-  setTimeout( () => {
-    countdownEl.style.color = 'white'; 
-  }, 500 );
-}
-
-////////////////////////////////////////////////////////////////////////
-
-//////////-- Input Checks --//////////
+//////////////////////////////////////////////////////
+//                    User Inputs                   //
+//////////////////////////////////////////////////////
 
 let health = 5;
-const wrongBuzz = new Audio('../audio/incorrect.mp3');
 
-keyboard.addEventListener('click', (e) => {
+const keyboard = document.querySelector('.keyboard');
+let userInput = '';
+
+let allHTMLLetters = document.getElementsByClassName('letter');
+
+const hearts = document.querySelectorAll('.heart')
+const ehearts = document.querySelectorAll('.eheart')
+
+keyboard.addEventListener('mousedown', (e) => {
+  const key = e.target;
+  if (key.tagName === 'INPUT') {
+    keyClick.currentTime = 0;
+    keyClick.play();
+  }
+});
+
+keyboard.addEventListener('mouseup', (e) => { //click
+  
+  let key = e.target;
+  if (key.tagName === 'INPUT') {
+    userInput = key.value;
+    console.log(userInput);
+    keyRelease.currentTime = 0; //
+    keyRelease.play(); //
+  }
+  
   let allLetters = selectedPhrase.replace(/ /g, '').toUpperCase();
-  const found = userInput.match(allLetters);
   let check = true;
 
-  console.log(allLetters);
-
   for (let i=0; i<allLetters.length; i++) {
-    let allHTMLLetters = document.getElementsByClassName('letter');
     if (userInput == allLetters[i]) {
       injectLetter = allLetters[i];
-      letterIndex = allHTMLLetters[i];
-      letterIndex.textContent = injectLetter;
+      letterLocation = allHTMLLetters[i];
+      letterLocation.textContent = injectLetter;
+      letterLocation.className += ' show';
       check = false;
     } 
+  }
+
+  let winCondition = 0;
+  for (let i=0; i<allHTMLLetters.length; i++) {
+    if (allHTMLLetters[i].textContent == ' ') {
+      console.log('space left');
+      winCondition++;
+    } 
+  }
+
+  if (winCondition == 0) {
+    winGame();
+  }
+
+  key.disabled = 'true';
+  key.style.color = 'white';
+
+  // for animating clock color change when user makes a mistake
+
+  function clockRedToggle() {
+    countdownEl.style.color = 'red'; 
+    setTimeout( () => {
+      countdownEl.style.color = 'white'; 
+    }, 500 );
   }
 
   if (check == true) {
@@ -260,12 +327,25 @@ keyboard.addEventListener('click', (e) => {
     console.log(`Health: ${health}`);
     if (quarterSecond > 20) {
       clockRedToggle();
-    }
+    } 
+  } 
+  
+  if (health == 4) {
+    hearts[0].style.display = 'none';
+    ehearts[0].style.display = 'inline-block';
+  } else if (health == 3) {
+    hearts[1].style.display = 'none';
+    ehearts[1].style.display = 'inline-block';
+  } else if (health == 2) {
+    hearts[2].style.display = 'none';
+    ehearts[2].style.display = 'inline-block';
+  } else if (health == 1) {
+    hearts[3].style.display = 'none';
+    ehearts[3].style.display = 'inline-block';
   }
 
   if (health <= 0) {
     endGame();
-    
   }
 
 });
@@ -273,26 +353,73 @@ keyboard.addEventListener('click', (e) => {
 
 //////////-- EndGame Overlay (Lost) and Resets --//////////
 
-function endGame() {
-  const overlayText = document.querySelector('p');
-  const resetBtn = document.getElementById('btn-start');
+const overlayText = document.querySelector('p');
+const resetBtn = document.getElementById('btn-start');
+const spareKey = document.getElementById('sf');
 
+function resetHearts() {
+  for(let i=0; i<hearts.length; i++) {
+    hearts[i].style.display = 'inline-block';
+  }
+  for(let i=0; i<ehearts.length; i++) {
+    ehearts[i].style.display = 'none';
+  }
+}
+
+function reset() {
+
+  spareKey.disabled = true;
+  
+  countdownEl.style.color = 'white';
+  phraseContainer.innerHTML = '';
+  health = 5;
+
+  seconds = originalSeconds;
+  quarterSecond = originalTime;
+
+  crowd.currentTime = 0;
+  fanfare.currentTime = 0;
+  explosionSound.currentTime = 0;
+
+  const allKeys = document.getElementsByClassName('key');
+  console.log(allKeys);
+  for (let i=0; i<allKeys.length; i++) {
+    allKeys[i].removeAttribute('disabled');
+    allKeys[i].removeAttribute('style');
+  }
+  resetHearts();
+  clearInterval(timerID);
+}
+
+function endGame() {
   overlay.style.display = 'flex';
   main.style.display = 'none';
 
   overlayText.textContent = 'BOOM! Next time try to cut the red wire... Oh wait... my bad. Wrong game.';
-  resetBtn.value = 'Reset';
+  overlayText.style.fontSize = '1em';
+  resetBtn.value = 'TRY AGAIN';
   overlay.className += ' end-game';
 
-  countdownEl.style.color = 'white';
-
-  phraseContainer.innerHTML = '';
-  health = 5;
-  seconds = originalSeconds;
-  quarterSecond = originalTime;
-
-  clearInterval(timerID);
-  explosionSound.currentTime = 0;
+  
   explosionSound.play();
+
+  music.pause();
+  reset();
 }
 
+function winGame() {
+
+  overlay.style.display = 'flex';
+  main.style.display = 'none';
+
+  overlayText.textContent = 'Nicely done! You beat the game and without even breaking a sweat! Want to play again?';
+  resetBtn.value = 'PLAY AGAIN';
+  overlay.className += ' win-game';
+
+  music.pause();
+  crowd.play();
+  crowd.volume = .5;
+  fanfare.play();
+  fanfare.volume = .4;
+  reset();
+}

@@ -1,4 +1,5 @@
 @use "../utilities" as *;
+
 .game-container {
   width: 100%;
   height: 100vh;
@@ -33,11 +34,10 @@
 
 .letter {
   text-align: center;
-  background-color: grey;
   font-family: 'VT323', monospace;
   font-size: 1.5em;
-  color: greenyellow;
-  border-bottom: 2px solid greenyellow;
+  color: $game-text;
+  border-bottom: 2px solid $game-text;
   width: 20px;
   height: 1.5em;
   line-height: 1.5em;

@@ -15,20 +15,71 @@
 </head>
   <body>
       <div class="overlay">
-        <p>Welcome to the GAME! Press 'Start' when you are ready to begin!</p>
-        <input type="button" id="btn-start" value="Start">
+        <div class="intro-grid">
+          <div class="welcome">
+            <p>Welcome to my Game!</p>
+          </div>
+          <div class="instruction">
+            <p>Your objective is to guess the phrase! Simple enough right?</p>
+          </div>
+          <div class="instruction intro-letter-flex visual">
+            <div class="ex-letter">F</div>
+            <div class="ex-letter">r</div>
+            <div class="ex-letter">o</div>
+            <div class="ex-letter">n</div>
+            <div class="ex-letter">t</div>
+            <div class="ex-letter no-brdr"> </div>
+            <div class="ex-letter">E</div>
+            <div class="ex-letter">n</div>
+            <div class="ex-letter">d</div>
+          </div>
+          <div class="instruction">
+            <p>Except, of course, that you must figure out the phrase before the timer runs out.</p>
+          </div>
+          <div class="instruction visual">
+            <p class="time-visual">01:00</p>
+          </div>
+          <div class="instruction">
+            <p>You also only have 5 lives, and everytime you lose one, the timer skips ahead! Good luck!</p>
+          </div>
+          <div class="instruction visual">
+            <i class="fa-regular fa-heart fa-xl"></i>
+            <i class="fa-regular fa-heart fa-xl"></i>
+            <i class="fa-solid fa-heart fa-xl"></i>
+            <i class="fa-solid fa-heart fa-xl"></i>
+            <i class="fa-solid fa-heart fa-xl"></i>
+          </div>
+        </div> 
+        <input type="button" id="btn-start" value="START">
       </div>
       <main class="game-container">
         <div class="game-screen">
           <div class="phrase-container"></div>
         </div>
         <div class="timer-container">
+          <div class="bomb-img">
+            <img class="wires" src="../images/wire.png">
+            <img  class="bomb" src="../images/tnt.png">
+          </div>
           <div class="clock">
             <div id="countdown"></div>
             <div class="light-container">
               <div class="light"></div>
             </div>
           </div>
+          <div class="health-bar">
+            <i class="fa-solid fa-heart fa-xs heart"></i>
+            <i class="fa-regular fa-heart fa-xs eheart"></i>
+            <i class="fa-solid fa-heart fa-xs heart"></i>
+            <i class="fa-regular fa-heart fa-xs eheart"></i>
+            <i class="fa-solid fa-heart fa-xs heart"></i>
+            <i class="fa-regular fa-heart fa-xs eheart"></i>
+            <i class="fa-solid fa-heart fa-xs heart"></i>
+            <i class="fa-regular fa-heart fa-xs eheart"></i>
+            <i class="fa-solid fa-heart fa-xs heart"></i>
+            <i class="fa-regular fa-heart fa-xs eheart"></i>
+          </div>
+          
         </div>
         <div class="board-container">
           <div class="keyboard">
@@ -63,5 +114,6 @@
         </div>
       </main>
   <script src="js/app.js"></script>
+  <script src="https://kit.fontawesome.com/2365d2b9a6.js" crossorigin="anonymous"></script>
   </body>
 </html>
