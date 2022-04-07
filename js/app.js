@@ -2,16 +2,16 @@
 //                   Audio Files                    //
 //////////////////////////////////////////////////////
 
-const keyClick = new Audio("../audio/key-click.mp3");
-const keyRelease = new Audio("../audio/key-release.mp3");
-const music = new Audio("../audio/music.mp3");
-const tickSound2 = new Audio('../audio/tick1.1.mp3');
-const tickSound1 = new Audio('../audio/tick2.1.mp3');
-const explosionSound = new Audio('../audio/explosion.mp3');
-const wrongBuzz = new Audio('../audio/incorrect.mp3');
-const crowd = new Audio('../audio/crowd.mp3');
-const fanfare = new Audio('../audio/fanfare.mp3');
-const ding = new Audio('../audio/ding.mp3');
+const keyClick = new Audio("audio/key-click.mp3");
+const keyRelease = new Audio("audio/key-release.mp3");
+const music = new Audio("audio/music.mp3");
+const tickSound2 = new Audio('audio/tick1.1.mp3');
+const tickSound1 = new Audio('audio/tick2.1.mp3');
+const explosionSound = new Audio('audio/explosion.mp3');
+const wrongBuzz = new Audio('audio/incorrect.mp3');
+const crowd = new Audio('audio/crowd.mp3');
+const fanfare = new Audio('audio/fanfare.mp3');
+const ding = new Audio('audio/ding.mp3');
 
 //////////////////////////////////////////////////////
 //                   Start Game                     //
