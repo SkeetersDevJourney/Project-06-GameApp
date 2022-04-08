@@ -52,9 +52,8 @@ const phrases = [
   'Optimism is an occupational hazard of programming.',
   "It's not a bug. It's an undocumented feature!",
   'Great web design without functionality is like a sports car with no engine.',
-  "One man's crappy software is another man's full time job.",
   'Talk is cheap. Show me the code.',
-  'Website without visitors is like a ship lost in the horizon.'
+  'Website without visitors is like a ship lost in the horizon.',
 ];
 
 /*  Retrieves random phrase from the phrases array & prevents 
@@ -65,7 +64,7 @@ let previousNum;
 
 function getRandomPhrase() {
 
-  let randomNum = Math.floor(Math.random() * 14);
+  let randomNum = Math.floor(Math.random() * 12);
 
   if (randomNum !== previousNum) {
     selectedPhrase = `${phrases[randomNum]}`;
