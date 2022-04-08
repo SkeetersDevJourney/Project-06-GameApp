@@ -1,19 +1,18 @@
 @use '../utilities' as *;
 
 .overlay {
+  font-family: 'VT323', monospace;
+  font-size: 1.25em;
   width: 100%;
   height: 100vh;
-  font-family: 'VT323', monospace;
   color: $game-text;
   background-color: black;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  margin-bottom: 100px;
   input {
-    text-align: center;
-    padding: 1.1em;
+    padding: .5em 1.1em;
     margin: 20px auto;
     border-radius: 10px;
     border-style: none;
@@ -28,14 +27,14 @@
 }
 
 .intro-grid {
-  max-width: 600px;
+  max-width: 500px;
   width: 85%;
   margin: 0 auto;
   display: grid;
   justify-content: center;
   align-items: center;
-  grid-template-columns: repeat(2, minmax(100px, 1fr));
-  grid-template-rows: repeat(4, fit-content(100%)); // minmax(100px, 125px)
+  grid-template-columns: repeat(2, minmax(70px, 1fr));
+  grid-template-rows: repeat(4, minmax(70px, 150px));
   p {
     font-size: 1em;
   } 
@@ -88,6 +87,18 @@
 
 .visual {
   padding: 0 15px;
+}
+
+@media (max-width: 500px) {
+  .overlay{
+    font-size: 1em;
+  } 
+}
+
+@media (max-height: 500px) {
+  .overlay {
+    justify-content: flex-start;
+  }
 }
 
 

@@ -11,6 +11,7 @@
   max-width: 650px;
   height: 50vh;
   margin: 0 auto;
+  padding-top: 10px;
 }
 
 .phrase-container {
@@ -50,7 +51,13 @@
   margin-top: 5px;
 }
 
-
+@media (max-width: 500px) {
+  .letter {
+    width: 15px;
+    height: 1.25em;
+   line-height: 1.25em;
+  }
+}
 
 
 

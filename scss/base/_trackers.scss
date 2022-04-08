@@ -6,7 +6,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  padding: 40px 10px 20px;
+  padding: 50px 0 10px;
   
 }
 
@@ -56,7 +56,7 @@ img {
 
 .light-container {
   background-color: rgb(78, 78, 78);
-  width: 21%;
+  min-width: 21%;
   height: 100%;
   display: flex;
   justify-content: center; 
@@ -82,11 +82,28 @@ img {
 }
 
 #countdown {
-  width: 80%;
+  min-width: 80%;
   text-align: center;
   background-color: black;
   color: white;
-  margin: 0 5px;
+}
+
+@media (max-width: 500px) {
+  .timer-container {
+    font-size: 1.75em;
+  }
+  .clock {
+    width: 100px;
+    height: 60px;
+  }
+
+  img {
+    width: 60px;
+  }
+
+  .wires {
+    width: 100px;
+  }
 }
 
 

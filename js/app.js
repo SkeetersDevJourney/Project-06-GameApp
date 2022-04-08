@@ -49,7 +49,12 @@ const phrases = [
   'First, solve the problem. Then, write the code.',
   'Fix the cause, not the symptom.',
   'Make it work, make it right, make it fast.',
-  'Optimism is an occupational hazard of programming.'
+  'Optimism is an occupational hazard of programming.',
+  "It's not a bug. It's an undocumented feature!",
+  'Great web design without functionality is like a sports car with no engine.',
+  "One man's crappy software is another man's full time job.",
+  'Talk is cheap. Show me the code.',
+  'Website without visitors is like a ship lost in the horizon.'
 ];
 
 /*  Retrieves random phrase from the phrases array & prevents 
@@ -60,7 +65,7 @@ let previousNum;
 
 function getRandomPhrase() {
 
-  let randomNum = Math.floor(Math.random() * 8);
+  let randomNum = Math.floor(Math.random() * 14);
 
   if (randomNum !== previousNum) {
     selectedPhrase = `${phrases[randomNum]}`;
@@ -118,7 +123,8 @@ function wordsToFlex() {
       if (   text == ';' 
           || text == '.'
           || text == "'"
-          || text == ",") {
+          || text == ","
+          || text == "!") {
         div.textContent = text;
         div.style.border = 'none';
       } else {
@@ -136,7 +142,7 @@ function wordsToFlex() {
 //                       Timer                      //
 //////////////////////////////////////////////////////
 
-const minutes = 1;   // Start time in minutes 
+const minutes = 9;   // Start time in minutes 
 
 let seconds = Math.floor(minutes * 60); // Start time in seconds
 originalSeconds = seconds; // Saves original second time for reset();
