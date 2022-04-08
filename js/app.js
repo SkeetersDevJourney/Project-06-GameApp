@@ -141,7 +141,7 @@ function wordsToFlex() {
 //                       Timer                      //
 //////////////////////////////////////////////////////
 
-const minutes = 9;   // Start time in minutes 
+const minutes = 1;   // Start time in minutes 
 
 let seconds = Math.floor(minutes * 60); // Start time in seconds
 originalSeconds = seconds; // Saves original second time for reset();

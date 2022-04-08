@@ -481,7 +481,7 @@ img {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 0px 35px;
+  gap: 0px 30px;
   margin: 20px;
   padding: 0 20px 20px;
   background-color: black;
@@ -499,8 +499,8 @@ img {
   font-size: 1.5em;
   color: greenyellow;
   border-bottom: 2px solid greenyellow;
-  width: 20px;
-  height: 1.5em;
+  width: 30px;
+  height: 1.75em;
   line-height: 1.5em;
   background-color: black;
 }
@@ -522,6 +522,10 @@ img {
     width: 15px;
     height: 1.25em;
     line-height: 1.25em;
+  }
+
+  .phrase-container {
+    gap: 15px;
   }
 }
 .timer-container {
